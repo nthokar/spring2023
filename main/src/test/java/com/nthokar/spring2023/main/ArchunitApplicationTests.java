@@ -1,4 +1,4 @@
-package com.example.spring2023;
+package com.nthokar.spring2023.main;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
@@ -16,7 +16,7 @@ class ArchunitApplicationTests {
     public void setup() {
         importedClasses = new ClassFileImporter()
                 .withImportOption(ImportOption.Predefined.DO_NOT_INCLUDE_TESTS)
-                .importPackages("com.example.spring2023");
+                .importPackages("com.nthokar.spring2023.main");
     }
     @Test
     void domainClassesShouldOnlyBeAccessedByApplication() {
