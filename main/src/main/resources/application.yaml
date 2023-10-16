@@ -1,2 +1,16 @@
 server:
-  port: ${PORT}
+  port: ${PORT:8080}
+  ssl:
+    key-store-type: PKCS12
+    key-store: ${KEY_PATH:main/src/main/resources/baeldung.p12}
+    key-store-password: aXaghasftasdl
+    key-alias: baeldung
+    enabled: false
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 901272848010-4r6vvjj1u4auft5bdf0haiddiocm2env.apps.googleusercontent.com
+            client-secret: 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
