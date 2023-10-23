@@ -1,7 +1,8 @@
-package com.nthokar.spring2023.main.domain.chess.logic.board;
+package com.nthokar.spring2023.main.domain.logic.board;
 
 import com.nthokar.spring2023.main.domain.chess.logic.Coordinate;
 import com.nthokar.spring2023.main.domain.chess.logic.Move;
+import com.nthokar.spring2023.main.domain.chess.logic.board.Board;
 import com.nthokar.spring2023.main.domain.chess.logic.figures.King;
 import com.nthokar.spring2023.main.domain.chess.logic.figures.Queen;
 import com.nthokar.spring2023.main.domain.chess.logic.figures.Rook;
@@ -72,6 +73,6 @@ public class BoardTest {
         var start = System.currentTimeMillis();
         board.isCheckMate(Color.WHITE);
         System.out.println(System.currentTimeMillis() - start);
-        Assert.isTrue(board.state == Board.State.CHECK_MATE, "isnt mate");
+        Assert.isTrue(board.getState() == Board.State.CHECK_MATE, "isnt mate");
     }
 }

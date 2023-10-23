@@ -1,11 +1,11 @@
-package com.nthokar.spring2023.main.application;
+package com.nthokar.spring2023.main.domain.chess.game;
 
 import lombok.AllArgsConstructor;
 
 import java.awt.*;
 
 @AllArgsConstructor
-public class Timer {
+public class  Timer {
     public ActiveEvent onTimeEnd;
 
     float whitePlayerTime;

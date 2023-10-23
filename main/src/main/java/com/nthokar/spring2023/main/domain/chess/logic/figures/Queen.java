@@ -1,7 +1,7 @@
 package com.nthokar.spring2023.main.domain.chess.logic.figures;
 
-import com.nthokar.spring2023.main.domain.chess.logic.rules.MoveRules;
 import com.nthokar.spring2023.main.domain.chess.logic.rules.Rule;
+import com.nthokar.spring2023.main.domain.chess.logic.rules.MoveRules;
 
 import java.awt.*;
 

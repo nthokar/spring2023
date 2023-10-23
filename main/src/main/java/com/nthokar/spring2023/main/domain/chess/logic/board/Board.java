@@ -1,10 +1,11 @@
 package com.nthokar.spring2023.main.domain.chess.logic.board;
 
 import com.nthokar.spring2023.main.domain.chess.logic.Move;
-import com.nthokar.spring2023.main.domain.chess.logic.rules.*;
+import com.nthokar.spring2023.main.domain.chess.logic.rules.Rule;
 import com.nthokar.spring2023.main.domain.chess.logic.figures.*;
 import com.nthokar.spring2023.main.domain.chess.logic.Coordinate;
 
+import com.nthokar.spring2023.main.domain.chess.logic.rules.MoveRules;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,13 @@ public class Board {
     */
    @Getter
    State state;
+   //current state of the game
    public enum State {
+      //game is processing
       IN_GAME,
+      //game paused
       PAUSE,
+      //game ended in draw
       DRAW,
       MATE,
       CHECK_MATE,

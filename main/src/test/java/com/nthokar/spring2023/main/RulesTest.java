@@ -6,8 +6,6 @@ import com.nthokar.spring2023.main.domain.chess.logic.board.Board;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 
-import java.awt.*;
-
 
 public class RulesTest {
 

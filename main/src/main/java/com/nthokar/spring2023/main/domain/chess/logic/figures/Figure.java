@@ -1,7 +1,6 @@
 package com.nthokar.spring2023.main.domain.chess.logic.figures;
 
 import com.nthokar.spring2023.main.domain.chess.logic.rules.Rule;
-import lombok.Getter;
 
 import java.awt.*;
 

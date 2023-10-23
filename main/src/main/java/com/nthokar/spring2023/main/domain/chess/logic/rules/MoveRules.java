@@ -1,7 +1,7 @@
 package com.nthokar.spring2023.main.domain.chess.logic.rules;
 
-import com.nthokar.spring2023.main.domain.chess.logic.Coordinate;
 import com.nthokar.spring2023.main.domain.chess.logic.figures.Figure;
+import com.nthokar.spring2023.main.domain.chess.logic.Coordinate;
 
 import java.awt.*;
 import java.util.Objects;
