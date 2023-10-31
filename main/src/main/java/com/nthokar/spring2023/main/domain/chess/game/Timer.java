@@ -6,6 +6,7 @@ import java.awt.*;
 
 @AllArgsConstructor
 public class  Timer {
+    //actions that would be executed when white's or black's time spent
     public ActiveEvent onTimeEnd;
 
     float whitePlayerTime;
@@ -22,12 +23,13 @@ public class  Timer {
         this.blackExtraTime = extraTime;
     }
 
-    public float measureTime(Runnable awaitMove){
+    //measure time of runnable function
+    public float measureTime(Runnable runnable){
         startMeasure();
-        awaitMove.run();
+        runnable.run();
         return endMeasure();
     }
-
+    //measure time until player apply correct move
     public void measureTimeForPlayer(Runnable awaitMove, Color color){
         var spendTime = measureTime(awaitMove);
         if (color == Color.WHITE)

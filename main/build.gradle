@@ -20,40 +20,38 @@ configurations {
 repositories {
     mavenCentral()
 }
-
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    testImplementation 'io.projectreactor:reactor-test'
+
     //spring
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
+//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     //logger
-    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.9'
 
     //google
-    implementation 'com.google.api-client:google-api-client:1.32.1'
-    implementation group: 'com.google.apis', name: 'google-api-services-forms', version: 'v1-rev20220908-2.0.0'
+//    implementation 'com.google.api-client:google-api-client:2.2.0'
+//    implementation group: 'com.google.apis', name: 'google-api-services-forms', version: 'v3-rev20220715-2.0.0'
 
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation "org.springframework.boot:spring-boot-starter-security"
+//    implementation "org.springframework.boot:spring-boot-starter-security"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+
     runtimeOnly 'org.postgresql:postgresql'
 
 
-    runtimeOnly group: 'com.h2database', name: 'h2', version: '2.1.214'
+    implementation group: 'com.h2database', name: 'h2', version: '2.1.214'
 
     //util
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
     annotationProcessor 'org.projectlombok:lombok'
-
-    //tests
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit-junit5
     testImplementation group: 'com.tngtech.archunit', name: 'archunit-junit5', version: '1.1.0'
 
 }
+
+
 
 tasks.named('test') {
     useJUnitPlatform()

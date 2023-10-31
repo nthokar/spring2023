@@ -1,29 +1,48 @@
 package com.nthokar.spring2023.main.infrastructure.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nthokar.spring2023.main.application.repositories.GameRepository;
+import com.nthokar.spring2023.main.application.services.GameService;
 import com.nthokar.spring2023.main.domain.chess.game.Game;
-//import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-//import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 
+@Slf4j
 @RestController("/game")
 public class GameController {
 
-    //@Autowired GameService gameService;
+    @Autowired
+    GameService gameService;
+    @Autowired
+    GameRepository gameRepository;
 
 //    @GetMapping
-//    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
-//        return oAuth2AuthenticationToken.getPrincipal().getAttributes();
+//    public String currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
+//        return oAuth2AuthenticationToken.toString();
 //    }
-
-    @PostMapping("/new_game")
-    public void buildNewGame(Game.Builder builder) {
-
+    @GetMapping("/game/{game_id}")
+    public String getGame(@PathVariable String game_id) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        var game =  gameService.getGame(game_id);
+        try {
+            return objectMapper.writeValueAsString(game);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
-//    @GetMapping("/game/{game_id}")
-//    public Game getGame(@PathVariable String game_id) {
-//        return gameService.getGame(game_id);
-//    }
+    @GetMapping("/gamefromhistory/{game_id}")
+    public String getGameFromHistory(@PathVariable String game_id) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        var game = gameRepository.findByIdAndFetch(game_id);
+        try {
+            return objectMapper.writeValueAsString(game.isPresent() ? null : game.get());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

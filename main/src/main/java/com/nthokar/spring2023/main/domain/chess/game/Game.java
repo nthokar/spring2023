@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class Game {
 
     public final String id;
@@ -34,7 +34,7 @@ public class Game {
     private final Timer timer;
 
     public static class Builder {
-
+        public final String id = UUID.randomUUID().toString();
         public Timer timer;
         public Player whitePlayer;
         public Player blackPlayer;
@@ -46,7 +46,7 @@ public class Game {
             return this;
         }
 
-        public Builder setPlayer2(Player blackPlayer){
+        public Builder setBlackPLayer(Player blackPlayer){
             this.blackPlayer = blackPlayer;
             return this;
         }
@@ -64,8 +64,15 @@ public class Game {
                 log.warn("can't build game without player(s)");
                 throw new RuntimeException();
             }
-            return new Game(UUID.randomUUID().toString(), whitePlayer, blackPlayer, board, timer);
+            return new Game(this);
         }
+    }
+    protected Game(Game.Builder builder){
+        this.board = builder.board;
+        this.whitePlayer = builder.whitePlayer;
+        this.blackPlayer = builder.blackPlayer;
+        this.timer = builder.timer;
+        this.id = builder.id;
     }
 
     public void start() {
