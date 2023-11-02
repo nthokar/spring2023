@@ -7,6 +7,11 @@ server:
     key-alias: baeldung
     enabled: false
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 #  security:
 #    oauth2:
 #      client:
@@ -14,3 +19,15 @@ spring:
 #          google:
 #            client-id: 901272848010-4r6vvjj1u4auft5bdf0haiddiocm2env.apps.googleusercontent.com
 #            client-secret: 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
+
+rabbitmq:
+  routing:
+    key: routing-key.1
+  routing2:
+    key: routing-key.2
+  exchange:
+    name: chess-moves
+  queue:
+    name: chess-moves.1
+  queue2:
+    name: chess-moves.2

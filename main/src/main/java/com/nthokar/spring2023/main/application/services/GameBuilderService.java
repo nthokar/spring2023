@@ -13,23 +13,17 @@ import java.util.Objects;
 
 @Service
 public class GameBuilderService {
+    @Autowired MatchmakingService matchmakingService;
     HashMap<String, Game.Builder> games = new HashMap<>();
 
-    public void findPlayerByElo(Game.Builder builder){
-
-    }
-
-    public Game.Builder createClassicBoard() {
+    public Game.Builder createClassicBoard(WebPlayer player) {
         var game = new Game.Builder()
                 .setBoard(new Board.Builder()
                         .setDefault()
                         .build())
                 .setTimer(new Timer(600, 5));
+        game.setWhitePlayer(player);
         games.put(game. id, game);
-        return game;
-    }
-    public Game.Builder createBuilder(Game.Builder game) {
-        games.put(game.id, game);
         return game;
     }
     public void setTimer(Game.Builder game, Integer time, Integer extraTime) {
@@ -37,5 +31,10 @@ public class GameBuilderService {
     }
     public Game.Builder getGame(String id) {
         return games.get(id);
+    }
+    public void build(String id){
+        var game = getGame(id);
+        matchmakingService.addToQueue(game);
+        games.remove(id);
     }
 }

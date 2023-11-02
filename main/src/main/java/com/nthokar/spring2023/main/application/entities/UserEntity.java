@@ -18,7 +18,7 @@ import java.util.List;
 public class UserEntity implements com.nthokar.spring2023.main.domain.User {
 
     @Column(name = "email")
-    @Id String email;
+    @Id String id;
     @Setter Integer elo;
     String name;
 //    @JoinColumn(name = "game_id", foreignKey =  @ForeignKey(

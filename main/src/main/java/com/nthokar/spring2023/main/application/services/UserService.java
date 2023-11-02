@@ -14,7 +14,4 @@ public class UserService {
     public Optional<UserEntity> getUser(String userId){
         return repo.findById(userId);
     }
-    public Optional<UserEntity> getOpponent(){
-
-    }
 }

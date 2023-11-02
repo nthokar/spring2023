@@ -1,5 +1,6 @@
 package com.nthokar.spring2023.main.domain.chess.logic.board;
 
+import com.nthokar.spring2023.main.domain.chess.logic.Castle;
 import com.nthokar.spring2023.main.domain.chess.logic.Move;
 import com.nthokar.spring2023.main.domain.chess.logic.rules.Rule;
 import com.nthokar.spring2023.main.domain.chess.logic.figures.*;
@@ -214,7 +215,14 @@ public class Board {
     * @param move
     * @return true if move is legal and false if not
     */
-   public boolean isMoveLegal(Move move){
+   public boolean isMoveLegal(Move move) {
+      if (move instanceof Castle) {
+         //TODO add check
+         boolean isLegal = true;
+         if (isLegal)
+            doCastle((Castle) move);
+         return isLegal;
+      }
       var startSquare = getSquare(move.getStartCoordinate());
       move = new Move(startSquare, getSquare(move.getEndCoordinate()));
       if (Objects.isNull(startSquare.getFigure())) return false;
@@ -348,5 +356,26 @@ public class Board {
             return square;
       }
       throw new RuntimeException("there is no king");
+   }
+
+   //Castle
+   private void doCastle(Castle castle) {
+      if (!castle.getStartFigure().isMoved && !castle.getEndFigure().isMoved){
+         var king = getSquare(castle.getStartCoordinate());
+         var rook = getSquare(castle.getEndCoordinate());
+
+         var dx = king.coordinate.x() - rook.coordinate.x();
+         Coordinate kingCoordinate;
+         if (dx > 1){
+            kingCoordinate = new Coordinate(king.coordinate.x() - 2, king.coordinate.y());
+            moveForce(new Move(king.coordinate, kingCoordinate));
+            moveForce(new Move(rook.coordinate, new Coordinate(kingCoordinate.x() + 1, rook.coordinate.y())));
+         }
+         else {
+            kingCoordinate = new Coordinate(king.coordinate.x() + 2, king.coordinate.y());
+            moveForce(new Move(king.coordinate, kingCoordinate));
+            moveForce(new Move(rook.coordinate, new Coordinate(kingCoordinate.x() - 1, rook.coordinate.y())));
+         }
+      }
    }
 }

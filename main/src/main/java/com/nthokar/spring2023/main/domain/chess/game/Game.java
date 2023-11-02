@@ -1,5 +1,6 @@
 package com.nthokar.spring2023.main.domain.chess.game;
 
+import com.nthokar.spring2023.main.application.MoveDTO;
 import com.nthokar.spring2023.main.domain.chess.logic.Move;
 import com.nthokar.spring2023.main.domain.chess.logic.board.Board;
 
@@ -78,23 +79,26 @@ public class Game {
     public void start() {
         state = State.IN_GAME;
         log.info("Game has been started");
-        while (board.getState() == Board.State.IN_GAME) {
-            applyMove(whichTurn.getMove());
-        }
+    }
+
+    public void end() {
         state = State.END;
         log.info("Game has been ended");
     }
 
-    public void applyMove(Move move) {
+    public boolean applyMove(MoveDTO move) {
+        if (state != State.IN_GAME) return false;
         log.info(whichTurn == whitePlayer ? "white's turn..." : "black's turn...");
-        timer.measureTimeForPlayer(() -> {
-                    boolean isValid = false;
-                    while (!isValid) {
-                        isValid = board.moveFigureIfLegal(whichTurn.getMove());
-                    }
-                },
-                whichTurn == whitePlayer ? Color.WHITE : Color.BLACK);
-        whichTurn = whichTurn == whitePlayer ? blackPlayer : whitePlayer;
-        log.info("move applied");
+        boolean isValid = board.moveFigureIfLegal(move.toMove())
+                && whichTurn.getId().equals(move.userId);
+        if (isValid) {
+            whichTurn = whichTurn == whitePlayer ? blackPlayer : whitePlayer;
+            log.info("move applied");
+            return true;
+        }
+        else {
+            log.info("move isn't valid");
+            return false;
+        }
     }
 }

@@ -32,19 +32,24 @@ public class GameBuilderController {
 
 
     @PostMapping("/buildGame/{userId}")
-    public String buildGame(@PathVariable String userId) throws JsonProcessingException {
+    public String createBuilder(@PathVariable String userId) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Optional<UserEntity> user = userService.getUser(userId);
         if (user.isEmpty()) throw new RuntimeException();
         WebPlayer whitePlayer = new WebPlayer(user.get());
-        Game.Builder builder = gameBuilderService
-                .createClassicBoard()
-                .setWhitePlayer(whitePlayer);
-        gameBuilderService.createBuilder(builder);
+        Game.Builder builder = gameBuilderService.createClassicBoard(whitePlayer);
         return objectMapper.writeValueAsString(builder);
     }
 
-    @PostMapping("/buildGame/{game_id}")
+    @PostMapping("/buildGame/build/{builderId}")
+    public String buildGame(@PathVariable String builderId) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        gameBuilderService.build(builderId);
+        return "ok";
+    }
+
+    @PostMapping("/buildGame/setTimer/{game_id}")
     public ResponseEntity<String> setTimer(
             @PathVariable String game_id,
             @RequestParam Integer time,
@@ -55,7 +60,7 @@ public class GameBuilderController {
         return ResponseEntity.ok("");
     }
 
-    @GetMapping("/buildGame/{id}")
+    @GetMapping("/buildGame/get/{id}")
     public Game.Builder getGame(@PathVariable String id){
         return gameBuilderService.getGame(id);
     }

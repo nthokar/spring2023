@@ -12,16 +12,6 @@ public class WebPlayer extends UserEntity implements Player  {
     public MoveStream inputStream;
 
     public WebPlayer(UserEntity userEntity) {
-        super(userEntity.getEmail(), userEntity.getElo(), userEntity.getName() /*userEntity.getGames()*/);
-    }
-
-    @Override
-    public Move getMove() {
-        return null;
-//        try {
-//            return inputStream.getMove();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+        super(userEntity.getId(), userEntity.getElo(), userEntity.getName() /*userEntity.getGames()*/);
     }
 }

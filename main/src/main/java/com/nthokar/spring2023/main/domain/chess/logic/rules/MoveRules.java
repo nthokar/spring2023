@@ -131,4 +131,11 @@ public class MoveRules {
         var dy = move.getEndCoordinate().y() - move.getStartCoordinate().y();
         return !(dx == 0 && dy == 0);
     };
+
+    public static Rule shortCastle = (move, board) -> {
+        var dx = move.getEndCoordinate().x() - move.getStartCoordinate().x();
+        var dy = move.getEndCoordinate().y() - move.getStartCoordinate().y();
+        return !(dx == 0 && dy == 0);
+    };
+
 }
