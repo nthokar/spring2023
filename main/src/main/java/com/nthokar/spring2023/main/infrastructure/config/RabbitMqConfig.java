@@ -1,4 +1,4 @@
-package com.nthokar.spring2023.main.infrastructure;
+package com.nthokar.spring2023.main.infrastructure.config;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;

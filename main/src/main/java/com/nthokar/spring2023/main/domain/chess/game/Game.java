@@ -17,7 +17,6 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class Game {
-
     public final String id;
 
     public final Player whitePlayer;
@@ -75,17 +74,6 @@ public class Game {
         this.timer = builder.timer;
         this.id = builder.id;
     }
-
-    public void start() {
-        state = State.IN_GAME;
-        log.info("Game has been started");
-    }
-
-    public void end() {
-        state = State.END;
-        log.info("Game has been ended");
-    }
-
     public boolean applyMove(MoveDTO move) {
         if (state != State.IN_GAME) return false;
         log.info(whichTurn == whitePlayer ? "white's turn..." : "black's turn...");

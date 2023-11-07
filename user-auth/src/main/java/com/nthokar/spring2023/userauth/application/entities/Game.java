@@ -1,4 +1,4 @@
-package com.nthokar.spring2023.main.application.entities;
+package com.nthokar.spring2023.userauth.application.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "games")
 @AllArgsConstructor
 @NoArgsConstructor
-public class GameEntity {
+public class Game {
     @Id
     @Column(name = "game_id")
     private String id;
@@ -21,14 +21,14 @@ public class GameEntity {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToOne()
     @JoinColumn(name = "black_player_id")
-    private UserEntity blackPlayer;
+    private User blackPlayer;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @ManyToOne()
     @JoinColumn(name = "white_player_id")
-    private UserEntity whitePlayer;
+    private User whitePlayer;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @OneToMany(mappedBy = "game", fetch = FetchType.EAGER)
-    public List<MoveEntity> moves;
+    public List<Move> moves;
 }

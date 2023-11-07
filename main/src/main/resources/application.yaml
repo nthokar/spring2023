@@ -1,5 +1,7 @@
 server:
   port: ${PORT:8080}
+  auth:
+    provider: http://localhost:9000
   ssl:
     key-store-type: PKCS12
     key-store: ${KEY_PATH:main/src/main/resources/baeldung.p12}

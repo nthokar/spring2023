@@ -1,8 +1,11 @@
 package com.nthokar.spring2023.main.domain.chess.game;
 
-import com.nthokar.spring2023.main.domain.chess.logic.Move;
-
-public interface Player {
-
-    String getId();
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+public class Player {
+    String id;
+    @Setter
+    Integer elo;
+    String name;
 }

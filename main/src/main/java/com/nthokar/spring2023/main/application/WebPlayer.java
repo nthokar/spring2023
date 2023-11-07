@@ -7,10 +7,7 @@ import com.nthokar.spring2023.main.domain.chess.logic.Move;
 
 import java.io.*;
 
-public class WebPlayer extends UserEntity implements Player  {
-
-    public MoveStream inputStream;
-
+public class WebPlayer extends UserEntity  {
     public WebPlayer(UserEntity userEntity) {
         super(userEntity.getId(), userEntity.getElo(), userEntity.getName() /*userEntity.getGames()*/);
     }

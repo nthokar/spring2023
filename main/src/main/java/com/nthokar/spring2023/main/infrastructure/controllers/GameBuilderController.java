@@ -31,7 +31,7 @@ public class GameBuilderController {
     }
 
 
-    @PostMapping("/buildGame/{userId}")
+    @PostMapping("/buildGame/createGame/{userId}")
     public String createBuilder(@PathVariable String userId) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Optional<UserEntity> user = userService.getUser(userId);
@@ -60,7 +60,7 @@ public class GameBuilderController {
         return ResponseEntity.ok("");
     }
 
-    @GetMapping("/buildGame/get/{id}")
+    @GetMapping("/buildGame/{id}")
     public Game.Builder getGame(@PathVariable String id){
         return gameBuilderService.getGame(id);
     }

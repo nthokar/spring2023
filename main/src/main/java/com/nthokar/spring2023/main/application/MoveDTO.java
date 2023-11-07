@@ -7,6 +7,9 @@ public class MoveDTO {
     public String userId;
 
     public String move;
+    /**
+     *  time delta between last move and this move timestamp
+     */
     public Float timeSpent;
 
     public Move toMove(){

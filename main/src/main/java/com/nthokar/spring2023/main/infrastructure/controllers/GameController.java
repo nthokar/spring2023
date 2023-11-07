@@ -21,10 +21,6 @@ public class GameController {
     @Autowired
     GameRepository gameRepository;
 
-//    @GetMapping
-//    public String currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken){
-//        return oAuth2AuthenticationToken.toString();
-//    }
     @GetMapping("/game/{game_id}")
     public String getGame(@PathVariable String game_id) {
         ObjectMapper objectMapper = new ObjectMapper();
