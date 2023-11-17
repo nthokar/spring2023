@@ -14,13 +14,6 @@ spring:
     port: 5672
     username: guest
     password: guest
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          google:
-#            client-id: 901272848010-4r6vvjj1u4auft5bdf0haiddiocm2env.apps.googleusercontent.com
-#            client-secret: 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
 
 rabbitmq:
   routing:

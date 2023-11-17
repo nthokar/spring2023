@@ -6,7 +6,9 @@ import java.awt.*;
 
 @AllArgsConstructor
 public class  Timer {
-    //actions that would be executed when white's or black's time spent
+    /**
+     * actions that would be executed when white's or black's time spent
+     */
     public ActiveEvent onTimeEnd;
 
     float whitePlayerTime;
