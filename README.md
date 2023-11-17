@@ -1,35 +1,56 @@
-# spring2023
+# spring2023 - a simple web api for chess 
 
-Жирнов Вдалимир Андреевич
+---
+            +-----+-----+-----+-----+-----+-----+-----+-----+
+            |  R  |  B  |  N  |  Q  |  K  |  N  |  B  |  R  | 8
+            +-----+-----+-----+-----+-----+-----+-----+-----+
+            |  P  |  P  |  P  |  P  |  P  |  P  |  P  |  P  | 7
+            +-----+-----+-----+-----+-----+-----+-----+-----+
+            |     |     |     |     |     |     |     |     | 6
+            +-----+-----+-----+-----+-----+-----+-----+-----+
+            |     |     |     |     |     |     |     |     | 5
+            +-----+-----+-----+-----+-----+-----+-----+-----+
+            |     |     |     |     |  p  |     |     |     | 4
+            +-----+-----+-----+-----+-----+-----+-----+-----+
+            |     |     |     |     |     |     |     |     | 3
+            +-----+-----+-----+-----+-----+-----+-----+-----+
+            |  p  |  p  |  p  |  p  |     |  p  |  p  |  p  | 2
+            +-----+-----+-----+-----+-----+-----+-----+-----+
+            |  r  |  n  |  b  |  q  |  k  |  b  |  n  |  r  | 1
+            +-----+-----+-----+-----+-----+-----+-----+-----+
+               a     b     c     d     e     f     g     h
 
-# Идея приложения
+## About
 
-Веб сайт для онлайн игры в шахматы.
-Сайт будет предоставлять возможность играть с другими игроками, с ботами, а так же участвовать в турнирах.
-Так же на этом вебсайте будут присутсвовать обучающие материалы, к примеру анализ партий и просмотр наиболее интересных
-партий из истории.
+---
 
-## Описание возможностей приложения
+is a web api for chess websites, that allows a lot of
+possibilities of games variations.
 
-Пользователи могут зарегистрироваться на сайте, чтобы начать игру, и могут выбирать из различных режимов игры, включая
-классические шахматы, быстрые шахматы и турниры.
+The site will provide the opportunity to play with other players, with bots, and also participate in tournaments.
+Also on this website there will be educational materials, for example, analysis of games and viewing of the most interesting
+games from history.
 
-Проект также предлагаем функцию рейтинга игроков, которая позволяет пользователям оценивать других игроков и получать
-очки за победу над ними. Рейтинг игроков обновляется регулярно, что помогает нам определить лучших игроков и следить за
-прогрессом всех участников.
+## Features(IN PLAN)
 
-Так же авторизованные пользователи могут получать анализ своих партий, в виде оценки сыграных ходов и предложении
-наиболее удачных.
+---
 
-## Обработка данных
+### Api affords:
+- User authorization in and authorizations with via relative databases, like postgres.
+- Starting and processing chess games.
+- queuing users games and merging it. 
+- Elo's system of players rank.
+- Analyzing users matches and chess positions.
 
-- управление аккаунтами(создание, хранение, изменение)
-- поиск противника основываясь на рейтинге
-- изменение рейтинга по исходу матча или турнира(будет основавываться на ситстеме эло или глико)
+### Data processing
 
-- обработка данных о партиях
-    - сохранение сыгранных партий
-    - просмотр партий
-    - предоставление статистических данных о партиях(к примеру процент выигранных партий после определенных ходов)
-
+- User accounts manegmenting via roles model.
+  - Register users.
+  - Change user's details.
+  - <p>...
+- Finding opponent by game based on filters.
+- Elo's rating update.
+- Processing data of games in archive.
+    - Saving users games to database.
+    - Afford statistics of games
   
