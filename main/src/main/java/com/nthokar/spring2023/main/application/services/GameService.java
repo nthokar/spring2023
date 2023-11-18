@@ -19,7 +19,6 @@ public class GameService implements com.nthokar.spring2023.main.application.inte
         var game = getGame(moveDTO.gameId);
         return game.applyMove(moveDTO);
     }
-
     @Override
     public Game getGame(String id) {
         return games.get(id);

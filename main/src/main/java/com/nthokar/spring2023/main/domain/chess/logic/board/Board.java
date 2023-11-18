@@ -25,7 +25,6 @@ public class Board {
     */
    @Getter
    State state;
-   //current state of the game
    public enum State {
       //game is processing
       IN_GAME,
@@ -47,7 +46,7 @@ public class Board {
    /**
     * array of squares at board
     * That array initialized once time before game start,
-    * and cannot to be change.
+    * and cannot to be changed.
     */
    final Square[][] squares;
 

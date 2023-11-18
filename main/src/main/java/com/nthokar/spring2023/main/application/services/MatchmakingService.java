@@ -25,22 +25,26 @@ public class MatchmakingService {
         public Game.Builder getBuilder(String gameType, String gameId) {
             return games.get(gameType).get(gameId);
         }
-        public HashMap<String, Game.Builder> getBuilderByType(String gameType) {
+        public HashMap<String, Game.Builder> getBuildersByType(String gameType) {
             return games.get(gameType);
         }
-        public HashMap<String, HashMap<String, Game.Builder>> getBuilderTypes() {
+        public HashMap<String, HashMap<String, Game.Builder>> getBuilders() {
             return games;
         }
         public Game.Builder deleteBuilder(String gameType, String gameId){
             return games.get(gameType).remove(gameId);
         }
 
-        public Game.Builder deleteBuilder(Game.Builder builder){
-            return games.get(builder.getClass().getName()).remove(builder.id);
+        public void deleteBuilder(Game.Builder builder){
+            games.get(getBuilderType(builder)).remove(builder.id);
+        }
+
+        public static String getBuilderType(Game.Builder builder) {
+            return builder.getClass().getName();
         }
 
         public void putBuilder(Game.Builder builder){
-            var builderType = builder.getClass().getName();
+            var builderType = getBuilderType(builder);
             if (games.containsKey(builderType)){
                 games.get(builderType).put(builder.id, builder);
             }
@@ -78,6 +82,68 @@ public class MatchmakingService {
             matchMakingHashMap.deleteBuilder(game);
         }
     }
+    //@Async
+    public HashMap<String, HashMap<String, String>> mergePlayers()  {
+        log.info("merging...");
+        HashMap<String, HashMap<String, String>> gamesToMerge = new HashMap<>();
+        BiPredicate<Game.Builder, Game.Builder> predicate = (game1, game2) -> true;
+
+        var builderTypes = matchMakingHashMap.getBuilders();
+        for (var builderType:builderTypes.keySet()) {
+            gamesToMerge.put(builderType, mergePlayersInType(builderType));
+        }
+        mergeGames(gamesToMerge);
+        return gamesToMerge;
+    }
+    public HashMap<String, String> mergePlayersInType(String builderType)  {
+        log.info(String.format("merging in Type: %s ...", builderType));
+        BiPredicate<Game.Builder, Game.Builder> predicate = (game1, game2) -> true;
+        var gamesToMergeInType = findGamesToMergeInType(builderType, predicate);
+        mergeGames(builderType, gamesToMergeInType);
+        return gamesToMergeInType;
+    }
+
+    private HashMap<String, String> findGamesToMergeInType(String builderType, BiPredicate<Game.Builder, Game.Builder> predicate) {
+        var gamesToMerge = new HashMap<String, String>();
+        var buildersInType = matchMakingHashMap.getBuildersByType(builderType);
+        var buildersInTypeSet = buildersInType.keySet();
+        for (var gameId1:buildersInTypeSet){
+            var game1 =  buildersInType.get(gameId1);
+            for (var gameId2:buildersInTypeSet){
+                var game2 =  buildersInType.get(gameId2);
+                if (predicate.test(game1, game2)
+                        && !Objects.equals(gameId1, gameId2)
+                        && !gamesToMerge.containsKey(gameId1)
+                        && !gamesToMerge.containsKey(gameId2)
+                        && buildersInType.containsKey(gameId1)
+                        && buildersInType.containsKey(gameId2)) {
+                    //if (mergedGames.containsKey(builderType)) mergedGames.get(builderType).put(gameId1, gameId2);
+                    //else gamesToMerge.put(builderType, new HashMap<>(){{put(gameId1, gameId2);}});
+                    gamesToMerge.put(gameId1, gameId2);
+                }
+            }
+        }
+        return gamesToMerge;
+    }
+
+    private void mergeGames(HashMap<String, HashMap<String, String>> mergedGames) {
+        for (var gameType: mergedGames.keySet()){
+            var gamesInType = mergedGames.get(gameType);
+            for (var gameId:gamesInType.keySet()){
+                var game1 = matchMakingHashMap.getBuilder(gameType, gameId);
+                var game2 = matchMakingHashMap.getBuilder(gameType, gamesInType.get(gameId));
+                mergeGame(game1, game2);
+            }
+        }
+    }
+
+    private void mergeGames(String gameType, HashMap<String, String> mergedGames) {
+        for (var gameId:mergedGames.keySet()){
+            var game1 = matchMakingHashMap.getBuilder(gameType, gameId);
+            var game2 = matchMakingHashMap.getBuilder(gameType, mergedGames.get(gameId));
+            mergeGame(game1, game2);
+        }
+    }
     private void mergeGame(Game.Builder game1, Game.Builder game2) {
         if ((Objects.nonNull(game1.blackPlayer) && Objects.nonNull(game1.whitePlayer))
                 || (Objects.nonNull(game2.blackPlayer) && Objects.nonNull(game2.whitePlayer))) {
@@ -91,43 +157,5 @@ public class MatchmakingService {
         buildGame(game1);
 
         log.info("game have been merged");
-    }
-    //@Async
-    //@Scheduled(fixedDelay = 5000)
-    public HashMap<String, HashMap<String, String>> mergePlayers()  {
-        log.info("merging...");
-        HashMap<String, HashMap<String, String>> mergedGames = new HashMap<>();
-        BiPredicate<Game.Builder, Game.Builder> predicate = (game1, game2) -> true;
-
-        var builders = matchMakingHashMap.getBuilderTypes();
-        var keySet = builders.keySet();
-        for (var key:keySet) {
-            var buildersInType = matchMakingHashMap.getBuilderByType(key);
-            var keySet2 = buildersInType.keySet();
-            for (var gameId1:keySet2){
-                var game1 =  buildersInType.get(gameId1);
-                for (var gameId2:keySet2){
-                    var game2 =  buildersInType.get(gameId2);
-                    if (predicate.test(game1, game2)
-                            && gameId1 != gameId2
-                            && (!mergedGames.containsKey(key) || !mergedGames.get(key).containsKey(gameId1))
-                            && (!mergedGames.containsKey(key) || !mergedGames.get(key).containsKey(gameId2))
-                            && buildersInType.containsKey(gameId1)
-                            && buildersInType.containsKey(gameId2)) {
-                        if (mergedGames.containsKey(key)) mergedGames.get(key).put(gameId1, gameId2);
-                        else mergedGames.put(key, new HashMap<>(){{put(gameId1, gameId2);}});
-                    }
-                }
-            }
-            for (var gameType:mergedGames.keySet()){
-                var gamesInType = mergedGames.get(gameType);
-                for (var gameId:gamesInType.keySet()){
-                    var game1 = matchMakingHashMap.getBuilder(gameType, gameId);
-                    var game2 = matchMakingHashMap.getBuilder(gameType, gamesInType.get(gameId));
-                    mergeGame(game1, game2);
-                }
-            }
-        }
-        return mergedGames;
     }
 }

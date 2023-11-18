@@ -2,6 +2,7 @@ package com.nthokar.spring2023.main.domain.chess.logic;
 
 import com.nthokar.spring2023.main.domain.chess.logic.board.Square;
 import com.nthokar.spring2023.main.domain.chess.logic.figures.Figure;
+import com.nthokar.spring2023.main.domain.chess.logic.parsers.CoordinateParser;
 
 public class Move {
     /**
@@ -26,8 +27,8 @@ public class Move {
     }
     public Move (String string) {
         try {
-            var startCoordinate = readCoordinate(string.substring(0,2));
-            var endCoordinate = readCoordinate(string.substring(2));
+            var startCoordinate = CoordinateParser.parseToCoordinate(string.substring(0, 2));
+            var endCoordinate = CoordinateParser.parseToCoordinate(string.substring(2));
             this.startSquare = new Square(null, null,startCoordinate);
             this.endSquare = new Square(null, null, endCoordinate);
         }
@@ -60,11 +61,5 @@ public class Move {
 
     public Figure getEndFigure(){
         return endSquare.getFigure();
-    }
-
-    private Coordinate readCoordinate(String str) throws IllegalAccessException {
-        if (str.length() != 2)
-            throw new IllegalAccessException();
-        return new Coordinate((int)str.charAt(0) - (int)'a' + 1, Character.getNumericValue(str.charAt(1)));
     }
 }

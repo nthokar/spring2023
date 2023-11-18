@@ -50,7 +50,9 @@ games from history.
   - <p>...
 - Finding opponent by game based on filters.
 - Elo's rating update.
+
 - Processing data of games in archive.
     - Saving users games to database.
     - Afford statistics of games
+    - [More details](INFO.md)
   

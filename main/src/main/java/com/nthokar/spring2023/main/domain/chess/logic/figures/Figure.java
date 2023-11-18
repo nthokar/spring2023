@@ -41,9 +41,7 @@ public abstract class Figure {
         switch (name){
             case "pawn":
                 return 1;
-            case "knight":
-                return 3;
-            case "bishop":
+            case "knight", "bishop":
                 return 3;
             case "rook":
                 return 5;
