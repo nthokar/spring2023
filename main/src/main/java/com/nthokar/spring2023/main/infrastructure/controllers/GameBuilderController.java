@@ -30,9 +30,9 @@ public class GameBuilderController {
         //gameBuilderService.connectToGame(game, user.get());
     }
 
-
     @PostMapping("/buildGame/createGame/{userId}")
-    public String createBuilder(@PathVariable String userId) throws JsonProcessingException {
+    public String createClassicBuilder(@RequestParam String userId,
+                                       @RequestParam String timeStandard) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Optional<UserEntity> user = userService.getUser(userId);
         if (user.isEmpty()) throw new RuntimeException();
@@ -41,25 +41,28 @@ public class GameBuilderController {
         return objectMapper.writeValueAsString(builder);
     }
 
+
+    @PostMapping("/buildGame/createGame/{userId}")
+    public String createBuilder(@PathVariable String userId) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Optional<UserEntity> user = userService.getUser(userId);
+        if (user.isEmpty()) throw new RuntimeException();
+        WebPlayer whitePlayer = new WebPlayer(user.get());
+        Game.Builder builder = new Game.Builder();
+        builder.setWhitePlayer(whitePlayer);
+        return objectMapper.writeValueAsString(builder);
+    }
+
     @PostMapping("/buildGame/build/{builderId}")
-    public String buildGame(@PathVariable String builderId) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        gameBuilderService.build(builderId);
-        return "ok";
+    public ResponseEntity<String> buildGame(@PathVariable String builderId) {
+        try {
+            gameBuilderService.build(builderId);
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
-    @PostMapping("/buildGame/setTimer/{game_id}")
-    public ResponseEntity<String> setTimer(
-            @PathVariable String game_id,
-            @RequestParam Integer time,
-            @RequestParam Integer extra_time) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        var game = gameBuilderService.getGame(game_id);
-        gameBuilderService.setTimer(game, time, extra_time);
-        return ResponseEntity.ok("");
-    }
-
     @GetMapping("/buildGame/{id}")
     public Game.Builder getGame(@PathVariable String id){
         return gameBuilderService.getGame(id);
