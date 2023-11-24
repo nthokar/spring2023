@@ -13,4 +13,10 @@ public class TimeStandards {
         TIME_STANDARD.put("10+5", new TimeStandard("10+5", 600, 5));
     }
 
+    public static TimeStandard parse(String str) {
+        var timeAndExtra = str.split("\\+");
+        var time = Float.parseFloat(timeAndExtra[0]);
+        var extra = Float.parseFloat(timeAndExtra[1]);
+        return new TimeStandard(str, time*60, extra);
+    }
 }
