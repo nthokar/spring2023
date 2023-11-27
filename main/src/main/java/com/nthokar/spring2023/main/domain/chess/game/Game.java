@@ -1,6 +1,7 @@
 package com.nthokar.spring2023.main.domain.chess.game;
 
 import com.nthokar.spring2023.main.application.MoveDTO;
+import com.nthokar.spring2023.main.domain.chess.logic.Move;
 import com.nthokar.spring2023.main.domain.chess.logic.board.Board;
 
 import lombok.AccessLevel;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
+import java.awt.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,15 +19,8 @@ import java.util.UUID;
 public class Game {
     public final String id;
 
-    /**
-     * players in game
-     */
     public final Player whitePlayer;
     public final Player blackPlayer;
-
-    /**
-     * state of game
-     */
 
     @Getter
     State state = State.PREPARE;
@@ -34,19 +29,10 @@ public class Game {
         IN_GAME,
         END
     }
-
-    /**
-     * player which move 
-     */
     private Player whichTurn;
     private final Board board;
     private final Timer timer;
 
-    /**
-     * game builder
-     * that's class used for configure game,
-     * before its starts.
-     */
     public static class Builder {
         public final String id = UUID.randomUUID().toString();
         public Timer timer;
@@ -73,7 +59,7 @@ public class Game {
             return this;
         }
 
-        public Game build() {
+        public Game build(){
             if (Objects.isNull(whitePlayer) || Objects.isNull(blackPlayer)){
                 log.warn("can't build game without player(s)");
                 throw new RuntimeException();
@@ -81,22 +67,18 @@ public class Game {
             return new Game(this);
         }
     }
-    protected Game(Game.Builder builder) {
+    protected Game(Game.Builder builder){
         this.board = builder.board;
         this.whitePlayer = builder.whitePlayer;
         this.blackPlayer = builder.blackPlayer;
         this.timer = builder.timer;
         this.id = builder.id;
     }
-    /**
-     * process given move to game,
-     * apply move if it satisfies the rules.
-     */
-    public boolean processMove(MoveDTO move) {
+    public boolean applyMove(MoveDTO move, Player player) {
         if (state != State.IN_GAME) return false;
         log.info(whichTurn == whitePlayer ? "white's turn..." : "black's turn...");
         boolean isValid = board.moveFigureIfLegal(move.toMove())
-                && whichTurn.getId().equals(move.userId);
+                && whichTurn == player;
         if (isValid) {
             whichTurn = whichTurn == whitePlayer ? blackPlayer : whitePlayer;
             log.info("move applied");

@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Position implements com.nthokar.spring2023.archive.domain.v2.Position {
+public class Position implements com.nthokar.spring2023.archive.domain.Position {
     @Id
     private Long id;
     Integer index;

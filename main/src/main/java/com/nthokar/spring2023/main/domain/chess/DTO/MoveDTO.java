@@ -9,11 +9,6 @@ public class MoveDTO {
         this.move = CoordinateParser.parseToString(move.getStartCoordinate())
                 + CoordinateParser.parseToString(move.getEndCoordinate());
     }
-
-    /**
-     * move as string, example: e2e4
-     */
-
     public String move;
 
     /**

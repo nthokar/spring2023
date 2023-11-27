@@ -52,12 +52,10 @@ public class GameBuilderController {
     @PostMapping("/buildGame/setTimer/{game_id}")
     public ResponseEntity<String> setTimer(
             @PathVariable String game_id,
-            @RequestParam Integer time,
-            @RequestParam Integer extra_time) {
-        ObjectMapper objectMapper = new ObjectMapper();
+            @RequestParam String timeEncoded) {
         var game = gameBuilderService.getGame(game_id);
-        gameBuilderService.setTimer(game, time, extra_time);
-        return ResponseEntity.ok("");
+        gameBuilderService.setTimer(game, timeEncoded);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/buildGame/{id}")

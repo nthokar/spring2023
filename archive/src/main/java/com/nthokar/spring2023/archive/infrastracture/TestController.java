@@ -1,7 +1,7 @@
 package com.nthokar.spring2023.archive.infrastracture;
 
 import com.nthokar.spring2023.archive.app.entities.Game;
-import com.nthokar.spring2023.archive.app.services.ArchiveService;
+import com.nthokar.spring2023.archive.infrastracture.services.ArchiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,10 +15,10 @@ public class TestController {
     ArchiveService archiveService;
 
     @GetMapping("/game")
-    public ResponseEntity<Game> getGame(@RequestParam Long gameId) {
-        var game = archiveService.GetGame(gameId);
+    public ResponseEntity<Game> getGame(@RequestParam String gameId) {
+        var game = archiveService.getGame(gameId);
         return game.isPresent() ?
-                ResponseEntity.ok().body(archiveService.GetGame(gameId).get()) :
+                ResponseEntity.ok().body(archiveService.getGame(gameId).get()) :
                 ResponseEntity.badRequest().body(null);
     }
 }

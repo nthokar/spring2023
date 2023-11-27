@@ -7,11 +7,6 @@ import java.awt.*;
 import java.util.Objects;
 
 public class PositionEncoding {
-    /**
-     * encoding figure into encode, <a href="https://github.com/Nthokar/spring2023/blob/main-feuture/INFO.md">more details here</a>
-     * @param figure object of class that extend Figure
-     * @return return figure encode
-     */
     public static String encode(Figure figure) {
         if (Objects.isNull(figure)) return ".";
         String shortcut = ((Character) figure.name.toLowerCase().charAt(0)).toString();
@@ -21,11 +16,6 @@ public class PositionEncoding {
         return figure.color == Color.WHITE ? shortcut : shortcut.toUpperCase();
     }
 
-    /**
-     * encode position at board to encoded string
-     * @param squares a matrix of squares(position at board)
-     * @return return position encode
-     */
     public static String encode(Square[][] squares) {
         StringBuilder builder = new StringBuilder();
         for (var i = 0; i < squares.length; i++) {
@@ -38,13 +28,6 @@ public class PositionEncoding {
         return replaceRepeats(builder.toString());
     }
 
-    /**
-     * private method, that's you don't wanna know how to use.
-     *
-     * Util method that modify sequence of repeated figures
-     * @param str semi encoded string
-     * @return
-     */
     private static String replaceRepeats(String str) {
         var builder = new StringBuilder();
         int count = 1;

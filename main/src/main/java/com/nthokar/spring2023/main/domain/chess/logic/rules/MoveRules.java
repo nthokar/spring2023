@@ -1,5 +1,6 @@
 package com.nthokar.spring2023.main.domain.chess.logic.rules;
 
+import com.nthokar.spring2023.main.domain.chess.logic.Castle;
 import com.nthokar.spring2023.main.domain.chess.logic.figures.Figure;
 import com.nthokar.spring2023.main.domain.chess.logic.Coordinate;
 
@@ -133,9 +134,18 @@ public class MoveRules {
     };
 
     public static Rule shortCastle = (move, board) -> {
+        if (!(move instanceof Castle)) return false;
         var dx = move.getEndCoordinate().x() - move.getStartCoordinate().x();
         var dy = move.getEndCoordinate().y() - move.getStartCoordinate().y();
-        return !(dx == 0 && dy == 0);
+        if (dx != 2 && dy != 2) return false;
+        if (move.getStartFigure().isMoved || move.getEndFigure().isMoved) return false;
+        var nVector = new Coordinate(Math.abs(dx)/dx, Math.abs(dy)/dy);
+        for (var iVector = move.getStartCoordinate();
+             iVector.x() != move.getEndCoordinate().x() && iVector.y() != move.getEndCoordinate().y();
+             iVector = new Coordinate(iVector.x() + nVector.x(), iVector.y() + nVector.y())) {
+            if (Objects.nonNull(board.getSquare(iVector).getFigure())) return false;
+        }
+        //TODO add check of king under attack on the way
+        return true;
     };
-
 }

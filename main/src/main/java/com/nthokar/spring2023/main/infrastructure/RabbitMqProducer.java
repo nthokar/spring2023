@@ -37,24 +37,8 @@ public class RabbitMqProducer {
         template.setExchange(exchange);
     }
 
-    public void sendMessage(String message){
-        log.info(String.format("message sent -> %s", message));
-        template.convertAndSend(routingKey2 ,message);
-    }
-
-
-    @RabbitListener(queues = {"${rabbitmq.queue.name}"})
-    public void processMessage(String move){
-        log.info(String.format("move -> %s", move));
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            var moveDto = objectMapper.readValue(move, MoveDTO.class);
-            var isApplied = gameService.processMove(moveDto);
-            if (isApplied){
-                sendMessage(move);
-            }
-        } catch (JsonProcessingException e) {
-            return;
-        }
+    public void sendMessage(MoveDTO move){
+        log.info(String.format("message sent -> %s", move));
+        template.convertAndSend(routingKey2, move);
     }
 }
