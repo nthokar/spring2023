@@ -1,17 +1,10 @@
 package com.nthokar.spring2023.archive.app.services;
 
-import com.nthokar.spring2023.archive.app.entities.Game;
-import com.nthokar.spring2023.archive.app.repos.GameRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.nthokar.spring2023.archive.domain.Game;
 
 import java.util.Optional;
 
-@Service
-public class ArchiveService {
-    @Autowired
-    GameRepo gameRepo;
-    public Optional<Game> GetGame(Long gameId){
-        return gameRepo.findById(gameId);
-    }
+public interface ArchiveService {
+    Optional<Game> getGame(String gameId);
+    void saveGame(Game game);
 }

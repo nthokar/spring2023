@@ -5,13 +5,13 @@ import com.nthokar.spring2023.userauth.infrastructure.config.CustomUsrDetailsSer
 import com.nthokar.spring2023.userauth.infrastructure.config.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.swing.text.html.parser.Entity;
 
 @RestController
 public class AuthController {
@@ -23,9 +23,6 @@ public class AuthController {
     private CustomUsrDetailsService usrDetailsService;
 
 
-
-    record LoginRequest(String username, String password) {};
-    record LoginResponse(String message, String access_jwt_token, String refresh_jwt_token) {};
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
 
@@ -57,13 +54,21 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String refreshToken(@RequestBody LoginRequest request) {
+    public ResponseEntity<String> register(@RequestBody LoginRequest request) {
         try {
             usrDetailsService.saveUser(request.username, request.password);
-            return "ok";
+            return ResponseEntity.ok().build();
         }
         catch (Exception e){
-            return "bad";
+            return ResponseEntity.status(403).body(e.getMessage());
         }
     }
+
+    @PostMapping("/validate")
+    public String validate(@RequestParam String token) {
+        //TODO secure this endpoint
+        return tokenService.parseToken(token);
+    }
+    record LoginRequest(String username, String password) {};
+    record LoginResponse(String message, String access_jwt_token, String refresh_jwt_token) {};
 }

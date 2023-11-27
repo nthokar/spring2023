@@ -1,4 +1,4 @@
-package com.nthokar.spring2023.archive.domain.v2;
+package com.nthokar.spring2023.archive.domain;
 
 public interface Position {
     Integer getIndex();

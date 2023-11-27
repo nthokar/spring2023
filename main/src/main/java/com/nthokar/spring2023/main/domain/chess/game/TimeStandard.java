@@ -2,9 +2,10 @@ package com.nthokar.spring2023.main.domain.chess.game;
 
 import java.util.HashMap;
 
-public class TimeStandards {
-    public record TimeStandard(String name, float playerTime, float extraTime) {
-    }
+public class TimeStandard {
+    String name;
+    float playerTime;
+    float extraTime;
 
     //standard time formats for chess game
     public static final HashMap<String, TimeStandard> TIME_STANDARD = new HashMap<>();
@@ -18,5 +19,14 @@ public class TimeStandards {
         var time = Float.parseFloat(timeAndExtra[0]);
         var extra = Float.parseFloat(timeAndExtra[1]);
         return new TimeStandard(str, time*60, extra);
+    }
+    public Timer toTimer() {
+        return new Timer(playerTime, extraTime);
+    }
+
+    public TimeStandard(String name, float playerTime, float extraTime) {
+        this.name = name;
+        this.playerTime = playerTime;
+        this.extraTime = extraTime;
     }
 }

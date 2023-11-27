@@ -74,11 +74,11 @@ public class Game {
         this.timer = builder.timer;
         this.id = builder.id;
     }
-    public boolean applyMove(MoveDTO move) {
+    public boolean applyMove(MoveDTO move, Player player) {
         if (state != State.IN_GAME) return false;
         log.info(whichTurn == whitePlayer ? "white's turn..." : "black's turn...");
         boolean isValid = board.moveFigureIfLegal(move.toMove())
-                && whichTurn.getId().equals(move.userId);
+                && whichTurn == player;
         if (isValid) {
             whichTurn = whichTurn == whitePlayer ? blackPlayer : whitePlayer;
             log.info("move applied");

@@ -13,11 +13,14 @@ import java.util.Set;
 
 public class CustomUsrDetails implements UserDetails {
 
-    private static final long serialVersionUID = 1L;
-    private User user;
+    private final User user;
 
     public CustomUsrDetails(User user) {
         this.user = user;
+    }
+
+    public String getId() {
+        return user.getId();
     }
 
     @Override

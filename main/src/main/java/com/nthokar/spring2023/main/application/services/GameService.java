@@ -15,9 +15,14 @@ public class GameService implements com.nthokar.spring2023.main.application.inte
         return games.put(game.id, game);
     }
 
-    public boolean processMove(MoveDTO moveDTO){
+    public boolean processMove(MoveDTO moveDTO, String playerId){
         var game = getGame(moveDTO.gameId);
-        return game.applyMove(moveDTO);
+        if (game.whitePlayer.getId().equals(playerId))
+            return game.applyMove(moveDTO, game.whitePlayer);
+        if (game.blackPlayer.getId().equals(playerId))
+            return game.applyMove(moveDTO, game.blackPlayer);
+        else
+            throw new RuntimeException(String.format("no player with id: %s in game", playerId));
     }
     @Override
     public Game getGame(String id) {

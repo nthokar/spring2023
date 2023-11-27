@@ -48,6 +48,7 @@ public class TokenService  {
                 .expiresAt(now.plus(10, ChronoUnit.MINUTES))
                 .subject(usrDetails.getUsername())
                 .claim("scope", scope)
+                .claim("user_id", usrDetails.getId())
                 .build();
         return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
