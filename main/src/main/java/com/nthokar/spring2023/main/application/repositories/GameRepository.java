@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface GameRepository extends CrudRepository<GameEntity, String> {
     @Query("SELECT g FROM GameEntity g WHERE g.id = :id")
-    public Optional<GameEntity> findByIdAndFetch(@Param("id") String id);
+    Optional<GameEntity> findByIdAndFetch(@Param("id") String id);
     @Query("SELECT g.moves FROM GameEntity g")
-    public List<MoveEntity> findById2();
+    List<MoveEntity> findById2();
 }

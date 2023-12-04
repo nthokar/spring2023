@@ -1,6 +1,7 @@
 package com.nthokar.spring2023.main.domain.chess.logic.rules;
 
 import com.nthokar.spring2023.main.domain.chess.logic.Castle;
+import com.nthokar.spring2023.main.domain.chess.logic.Move;
 import com.nthokar.spring2023.main.domain.chess.logic.figures.Figure;
 import com.nthokar.spring2023.main.domain.chess.logic.Coordinate;
 
@@ -134,18 +135,34 @@ public class MoveRules {
     };
 
     public static Rule shortCastle = (move, board) -> {
+        //check if move is Castle
         if (!(move instanceof Castle)) return false;
+
         var dx = move.getEndCoordinate().x() - move.getStartCoordinate().x();
         var dy = move.getEndCoordinate().y() - move.getStartCoordinate().y();
+        //check if range more then max range
         if (dx != 2 && dy != 2) return false;
+
+        //check if figure have been moved
         if (move.getStartFigure().isMoved || move.getEndFigure().isMoved) return false;
+
+        //normal vector
         var nVector = new Coordinate(Math.abs(dx)/dx, Math.abs(dy)/dy);
-        for (var iVector = move.getStartCoordinate();
-             iVector.x() != move.getEndCoordinate().x() && iVector.y() != move.getEndCoordinate().y();
-             iVector = new Coordinate(iVector.x() + nVector.x(), iVector.y() + nVector.y())) {
+        for (
+                //start square
+                var iVector = move.getStartCoordinate();
+                //while iVector not on end square
+                iVector.x() != move.getEndCoordinate().x() && iVector.y() != move.getEndCoordinate().y();
+                //make step to end square
+                iVector = new Coordinate(iVector.x() + nVector.x(), iVector.y() + nVector.y())) {
+
+            //check if figures in the way
             if (Objects.nonNull(board.getSquare(iVector).getFigure())) return false;
+
+            //check if "check" on the way
+            if (!board.isCheckAfterMove(new Move(move.getStartCoordinate(), iVector))) return false;
         }
-        //TODO add check of king under attack on the way
+
         return true;
     };
 }

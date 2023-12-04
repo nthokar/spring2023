@@ -24,6 +24,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'io.projectreactor:reactor-test'
 
+    //
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3'
 
     //logger
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.9'

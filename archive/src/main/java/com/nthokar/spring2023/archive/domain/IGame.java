@@ -2,11 +2,11 @@ package com.nthokar.spring2023.archive.domain;
 
 import java.util.List;
 
-public interface Game {
+public interface IGame {
     String getId();
-    List<? extends Move> getMoves();
-    List<? extends Position> getPositions();
-    Opening extractOpening();
+    List<? extends IMove> getMoves();
+    List<? extends IPosition> getPositions();
+    IOpening extractOpening();
     String getWhitePlayer();
     String getBlackPlayer();
 }

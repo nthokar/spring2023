@@ -2,8 +2,8 @@ package com.nthokar.spring2023.archive.domain;
 
 import java.util.List;
 
-public interface Opening {
+public interface IOpening {
     String getName();
-    List<Move> getMoves();
-    List<Position> getKeyPositions();
+    List<IMove> getMoves();
+    List<IPosition> getKeyPositions();
 }

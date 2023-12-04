@@ -1,24 +1,29 @@
 package com.nthokar.spring2023.archive.app.entities;
 
 
-import com.nthokar.spring2023.archive.domain.Opening;
+import com.nthokar.spring2023.archive.domain.IGame;
+import com.nthokar.spring2023.archive.domain.IOpening;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 import java.util.List;
 
 
 @Entity
-public class Game implements com.nthokar.spring2023.archive.domain.Game {
+public class Game implements IGame {
     @Id
     private String id;
 
     @OneToMany
     List<Move> moves;
 
-    @OneToMany
+    @ManyToMany
     List<Position> positions;
+
+    String whitePlayer;
+    String blackPlayer;
 
     @Override
     public String getId() {
@@ -35,7 +40,7 @@ public class Game implements com.nthokar.spring2023.archive.domain.Game {
     }
 
     @Override
-    public Opening extractOpening() {
+    public IOpening extractOpening() {
         return null;
     }
 

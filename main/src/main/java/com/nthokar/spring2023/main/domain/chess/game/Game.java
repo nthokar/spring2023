@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 import java.util.UUID;
@@ -29,6 +30,7 @@ public class Game {
         IN_GAME,
         END
     }
+    public Action onGameEnd;
     private Player whichTurn;
     private final Board board;
     private final Timer timer;
@@ -79,8 +81,10 @@ public class Game {
         log.info(whichTurn == whitePlayer ? "white's turn..." : "black's turn...");
         boolean isValid = board.moveFigureIfLegal(move.toMove())
                 && whichTurn == player;
-        if (isValid) {
+        if (isValid && board.getState() == Board.State.IN_GAME) {
             whichTurn = whichTurn == whitePlayer ? blackPlayer : whitePlayer;
+
+            board.updateState();
             log.info("move applied");
             return true;
         }
@@ -88,5 +92,9 @@ public class Game {
             log.info("move isn't valid");
             return false;
         }
+    }
+
+    public boolean surrender(Player player) {
+        return false;
     }
 }

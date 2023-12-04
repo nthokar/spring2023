@@ -29,12 +29,7 @@ public class Board {
       //game is processing
       IN_GAME,
       //game paused
-      PAUSE,
-      //game ended in draw
-      DRAW,
-      MATE,
       CHECK_MATE,
-      SURRENDERED
    }
    /**
     * array of game general rules.
@@ -230,6 +225,20 @@ public class Board {
          flag &= rule.apply(move, this);
       }
       return flag;
+   }
+
+   /**
+    * update state of game
+    */
+
+   public void updateState() {
+
+      /**
+       * Рабоче-крстьянская версия, все поменяем
+       */
+
+      isCheckMate(Color.BLACK);
+      isCheckMate(Color.WHITE);
    }
 
    /**
