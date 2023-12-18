@@ -1,11 +1,10 @@
 package com.nthokar.spring2023.archive.infrastracture.services;
 
 import com.nthokar.spring2023.archive.app.entities.Position;
-import com.nthokar.spring2023.archive.app.repos.GameRepo;
+import com.nthokar.spring2023.archive.app.repos.GameRepository;
 import com.nthokar.spring2023.archive.app.services.IStatisticsService;
 import com.nthokar.spring2023.archive.domain.IGame;
 import com.nthokar.spring2023.archive.domain.IMove;
-import com.nthokar.spring2023.archive.domain.IOpening;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -16,8 +15,7 @@ import java.util.function.Predicate;
 public class StatisticsService implements IStatisticsService {
 
     @Autowired
-    GameRepo gameRepo;
-
+    GameRepository gameRepo;
 
     @Override
     public IGame getGamesWithOpenings(Position opening) {

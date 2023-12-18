@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpEntity;
@@ -18,12 +19,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.xml.stream.FactoryConfigurationError;
 import java.io.IOException;
 
 @Component
 @Order(1)
 @Slf4j
 public class TokenFilter extends OncePerRequestFilter {
+
+
+
     @Value("${auth.provider:http://localhost:9000}")
     private String authProvider;
     @Override

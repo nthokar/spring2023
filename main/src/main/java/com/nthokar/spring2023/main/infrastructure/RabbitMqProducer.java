@@ -2,13 +2,9 @@ package com.nthokar.spring2023.main.infrastructure;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.nthokar.spring2023.main.application.MoveDTO;
+import com.nthokar.spring2023.main.application.DTO.archive.MoveDTO;
 import com.nthokar.spring2023.main.application.services.GameService;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import org.springframework.beans.factory.annotation.Autowired;

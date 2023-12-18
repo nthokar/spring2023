@@ -1,9 +1,10 @@
 package com.nthokar.spring2023.main.application.services;
 
-import com.nthokar.spring2023.main.application.GameDTO;
-import com.nthokar.spring2023.main.application.MoveDTO;
+import com.nthokar.spring2023.main.application.DTO.archive.GameDTO;
+import com.nthokar.spring2023.main.application.DTO.frontend.MoveDTO;
 import com.nthokar.spring2023.main.application.services.feign.ArchiveService;
 import com.nthokar.spring2023.main.domain.chess.game.Game;
+import com.nthokar.spring2023.main.domain.chess.logic.Move;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,10 +23,10 @@ public class GameService implements com.nthokar.spring2023.main.application.inte
         var game = getGame(moveDTO.gameId);
 
         if (game.whitePlayer.getId().equals(playerId)) {
-            game.applyMove(moveDTO, game.whitePlayer);
+            game.applyMove(new Move(moveDTO.move), game.whitePlayer);
         }
         if (game.blackPlayer.getId().equals(playerId)) {
-            game.applyMove(moveDTO, game.blackPlayer);
+            game.applyMove(new Move(moveDTO.move), game.blackPlayer);
         } else
             throw new RuntimeException(String.format("no player with id: %s in game", playerId));
 

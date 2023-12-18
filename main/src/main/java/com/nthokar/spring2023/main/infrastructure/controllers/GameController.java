@@ -2,19 +2,15 @@ package com.nthokar.spring2023.main.infrastructure.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nthokar.spring2023.main.application.MoveDTO;
+import com.nthokar.spring2023.main.application.DTO.archive.MoveDTO;
 import com.nthokar.spring2023.main.application.repositories.GameRepository;
 import com.nthokar.spring2023.main.application.services.GameService;
-import com.nthokar.spring2023.main.domain.chess.game.Game;
 import com.nthokar.spring2023.main.infrastructure.RabbitMqProducer;
 import com.nthokar.spring2023.main.infrastructure.config.CustomAuthentication;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 
 @Slf4j

@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 
-public interface GameRepo extends CrudRepository<Game, String> {
+public interface GameRepository extends CrudRepository<Game, String> {
     @Query("SELECT g FROM Game g WHERE :position in (SELECT p FROM g.positions p)")
     List<Game> findAllByPositions(@Param("position") String position);
 }

@@ -1,6 +1,6 @@
 package com.nthokar.spring2023.main.domain.chess.game;
 
-import com.nthokar.spring2023.main.application.MoveDTO;
+import com.nthokar.spring2023.main.domain.chess.DTO.MoveDTO;
 import com.nthokar.spring2023.main.domain.chess.logic.Move;
 import com.nthokar.spring2023.main.domain.chess.logic.board.Board;
 
@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -76,10 +75,10 @@ public class Game {
         this.timer = builder.timer;
         this.id = builder.id;
     }
-    public boolean applyMove(MoveDTO move, Player player) {
+    public boolean applyMove(Move move, Player player) {
         if (state != State.IN_GAME) return false;
         log.info(whichTurn == whitePlayer ? "white's turn..." : "black's turn...");
-        boolean isValid = board.moveFigureIfLegal(move.toMove())
+        boolean isValid = board.moveFigureIfLegal(move)
                 && whichTurn == player;
         if (isValid && board.getState() == Board.State.IN_GAME) {
             whichTurn = whichTurn == whitePlayer ? blackPlayer : whitePlayer;

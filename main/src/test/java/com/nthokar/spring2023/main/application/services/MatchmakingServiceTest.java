@@ -29,7 +29,7 @@ class MatchmakingServiceTest {
     @Autowired GameBuilderService gameBuilderService;
 
     @Test
-    void mergePlayers() throws ExecutionException, InterruptedException {
+    void mergePlayers() {
 
         var player1 = new WebPlayer(new UserEntity());
         var player2 = new WebPlayer(new UserEntity());
@@ -42,9 +42,5 @@ class MatchmakingServiceTest {
         var future = matchmakingService.mergePlayers();
 
         Assert.assertTrue(future.size() > 0);
-
-        System.out.println(
-
-        );
     }
 }
