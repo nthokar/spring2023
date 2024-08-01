@@ -1,4 +1,4 @@
-# spring2023 - a simple web api for chess 
+# Simple web api for chess 
 
 ---
             +-----+-----+-----+-----+-----+-----+-----+-----+
